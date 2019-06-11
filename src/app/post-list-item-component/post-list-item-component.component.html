@@ -1,0 +1,25 @@
+<li [ngClass]="{
+  'list-group-item': true,
+  'list-group-item-success': postLikes > 0,
+  'list-group-item-danger': postLikes < 0
+}">
+    <div class="row">
+        <h4 class="col-md-8">{{ postTitle }}</h4>
+        <p>posté le : {{ postDate | date: 'EEEE d MMMM y' }}</p>
+    </div>
+
+    <div class="col-md-12">
+        <p>{{ postContent }}</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <button class="btn btn-success" (click)="onLike()">I like it !</button>
+        </div>
+        <div class="col-md-3">
+            <button (click)="onDislike()" class="btn btn-danger">I don't like</button>
+        </div>
+        
+        <p>Nombre de likes pour ce post : {{ postLikes }}</p>
+    </div>
+</li>
