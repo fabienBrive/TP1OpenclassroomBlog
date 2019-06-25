@@ -8,7 +8,14 @@ import * as firebase  from 'firebase';
 })
 export class PostsService {
 
-  posts = [];
+  posts = [
+    {
+      title: "test post 1", 
+      content: "Là je mets quelques lignes de bla bla bien sentis qui auront au moins le mérite de m'exercer à taper du texte au kilomètre, chose dans laquelle je m'améliore mais ou je ne suis pas encore le plus a l'aise du monde, bref ca doit etre suffisant pour ce post alors mercay et a bientot evidement...",
+      likes: 2,
+      date: new Date()
+    }
+  ];
   postsSubject = new Subject<Post[]>();
 
   emitPosts(){

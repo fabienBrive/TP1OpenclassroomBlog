@@ -11,11 +11,17 @@ import { NewPostComponent } from './new-post/new-post.component';
 import { HeaderComponent } from './header/header.component';
 import { PostsService } from 'src/app/services/posts.service';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthService } from './services/auth.service';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { AuthGuardService } from './services/auth-guard.service';
 
 const appRoutes: Routes = [
+  { path: 'auth/signup', component: SignUpComponent },
+  { path: 'auth/signin', component: SignInComponent },
   { path: 'posts', component: PostListComponent },
-  { path: 'new-post', component: NewPostComponent },
-  { path: '', redirectTo: 'posts'},
+  { path: 'new-post', canActivate: [AuthGuardService], component: NewPostComponent },
+  { path: '', redirectTo: 'posts', pathMatch: 'full'},
   { path: '**', redirectTo: 'posts' }
 ]
 
@@ -25,7 +31,9 @@ const appRoutes: Routes = [
     PostListComponent,
     PostListItemComponent,
     NewPostComponent,
-    HeaderComponent
+    HeaderComponent,
+    SignUpComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +44,9 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
-    PostsService
+    PostsService,
+    AuthService,
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })
