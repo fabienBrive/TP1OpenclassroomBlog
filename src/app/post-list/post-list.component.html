@@ -3,13 +3,38 @@
     <div class="col-xs-12">
       <h2>Mes Posts</h2>
       <ul class="list-group">
-        <app-post-list-item 
-        *ngFor="let post of posts, let i = index"
-        [postTitle]="post.title" 
-        [postContent]="post.content"
-        [postLikes]="post.likes"
-        [postDate]="post.date" >
-        </app-post-list-item>
+
+        <li *ngFor="let post of posts, let i = index" 
+            [ngClass]="{
+              'list-group-item': true,
+              'list-group-item-success': post.likes > 0,
+              'list-group-item-danger': post.likes < 0
+            }"
+        >
+
+          <div class="row">
+            <h4 class="col-md-8">{{ post.title }}</h4>
+            <p>posté le : {{ post.date }}</p>
+          </div>
+      
+          <div class="col-md-12">
+            <p>{{ post.content }}</p>
+          </div>
+      
+          <div class="row">
+            <div class="col-md-3">
+                <button class="btn btn-success" (click)="onLike(post)">I like it !</button>
+            </div>
+            <div class="col-md-3">
+                <button (click)="onDislike(post)" class="btn btn-danger">I don't like</button>
+            </div>
+            <div class="col-offset-md-3 col-md-3">
+                <button (click)="onDeletePost(post)" class="btn btn-primary">Delete post</button>
+            </div>
+            <p>likes : {{ post.likes }}</p>
+
+          </div>
+        </li>
       </ul>
     </div>
   </div>

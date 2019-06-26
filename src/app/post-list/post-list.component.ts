@@ -27,8 +27,26 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postsService.emitPosts();
   }
 
+  onLike(post: Post){
+    post.likes = post.likes + 1;
+    this.posts.push(post);
+    this.postsService.savePosts();
+    this.postsService.emitPosts();
+   }
+
+  onDislike(post: Post){
+    post.likes = post.likes - 1 ;
+    this.posts.push(post);
+    this.postsService.savePosts();
+    this.postsService.emitPosts();
+  }
+
   ngOnDestroy(){
     this.postsSubsciption.unsubscribe();
+  }
+
+  onDeletePost(post: Post){
+    this.postsService.deletePost(post);
   }
 
 

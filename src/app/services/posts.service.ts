@@ -24,16 +24,12 @@ export class PostsService {
     )
   }
 
-  addPost(post: Post) {
-    this.posts.push(post);
-    this.emitPosts();
-  }
-
   savePosts() {
     firebase.database().ref('/posts').set(this.posts);
   }
 
   deletePost(post: Post) {
+    console.log(post);
     const postIndexToRemove = this.posts.findIndex(
       (postElement) => {
         if (postElement === post) {
@@ -46,8 +42,36 @@ export class PostsService {
     this.emitPosts();
   }
 
+  getPostById(id: number) {
+    return new Promise(
+      (resolve, reject) => {
+        firebase.database().ref('/Posts/' + id)
+        .once('value').then(
+          (data) => {
+            resolve(data.val());
+          }, (error) => {
+            reject(error);
+          }
+        );
+      }
+    );
+  }
+
   createNewPost(newPost: Post) {
     this.posts.push(newPost);
+    this.savePosts();
+    this.emitPosts();
+  }
+
+  removePost(post: Post){
+    const bookIndexToRemove = this.posts.findIndex(
+      (bookElements) => {
+        if (bookElements === post) {
+          return true;
+        }
+      }
+    );
+    this.posts.splice(bookIndexToRemove, 1);
     this.savePosts();
     this.emitPosts();
   }
